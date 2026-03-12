@@ -35,11 +35,20 @@ export function Register() {
       setUser(res.data.user)
       navigate('/my/settings')
     } catch (err: unknown) {
-      const error = err as { response?: { data?: Record<string, string[]> } }
+      const error = err as { response?: { data?: Record<string, unknown> } }
       const data = error.response?.data
-      if (data) {
-        const firstError = Object.values(data).flat()[0]
-        setApiError(typeof firstError === 'string' ? firstError : 'Registration failed.')
+      if (data && typeof data === 'object') {
+        const messages: string[] = []
+        for (const value of Object.values(data)) {
+          if (typeof value === 'string') {
+            messages.push(value)
+          } else if (Array.isArray(value)) {
+            for (const item of value.flat()) {
+              if (typeof item === 'string') messages.push(item)
+            }
+          }
+        }
+        setApiError(messages[0] || 'Registration failed.')
       } else {
         setApiError('Something went wrong. Please try again.')
       }
