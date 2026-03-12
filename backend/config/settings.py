@@ -113,6 +113,14 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS", default="http://localhost:5173"
 ).split(",")
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "authorization",
+    "content-type",
+    "origin",
+    "x-requested-with",
+]
+CORS_ALLOW_CREDENTIALS = True
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
