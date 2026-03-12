@@ -134,11 +134,11 @@ export function SelectTickets() {
   return (
     <div className="max-w-xl mx-auto px-4 py-10">
       {/* Steps indicator */}
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-8">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-gray-400 mb-8">
         <span className="text-(--color-primary) font-medium">1. Select Tickets</span>
-        <span>—</span><span>2. Your Details</span>
-        <span>—</span><span>3. Payment</span>
-        <span>—</span><span>4. Confirmation</span>
+        <span className="hidden sm:inline">—</span><span>2. Your Details</span>
+        <span className="hidden sm:inline">—</span><span>3. Payment</span>
+        <span className="hidden sm:inline">—</span><span>4. Confirmation</span>
       </div>
 
       <h1 className="text-2xl font-bold text-gray-900 mb-1">{event.title}</h1>
@@ -154,7 +154,7 @@ export function SelectTickets() {
       {/* Ticket tiers */}
       <div className="space-y-3 mb-6">
         {tiers.map((tier) => (
-          <div key={tier.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 flex items-center justify-between">
+          <div key={tier.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <p className="font-medium text-gray-900">{tier.name}</p>
               {tier.description && <p className="text-sm text-gray-500 mt-0.5">{tier.description}</p>}

@@ -23,11 +23,11 @@ export function CheckoutPayment() {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-10">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-8">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-gray-400 mb-8">
         <span>1. Select Tickets</span>
-        <span>—</span><span>2. Your Details</span>
-        <span>—</span><span className="text-(--color-primary) font-medium">3. Payment</span>
-        <span>—</span><span>4. Confirmation</span>
+        <span className="hidden sm:inline">—</span><span>2. Your Details</span>
+        <span className="hidden sm:inline">—</span><span className="text-(--color-primary) font-medium">3. Payment</span>
+        <span className="hidden sm:inline">—</span><span>4. Confirmation</span>
       </div>
 
       <h1 className="text-2xl font-bold text-gray-900 mb-8">Payment</h1>

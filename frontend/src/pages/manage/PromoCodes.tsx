@@ -112,7 +112,7 @@ export function PromoCodes() {
         <span className="text-gray-900">Promo Codes</span>
       </div>
 
-      <div className="flex gap-4 mb-8">
+      <div className="flex flex-wrap gap-2 sm:gap-4 mb-8">
         <Link to={`/manage/events/${eventSlug}?org=${orgSlug}`}>
           <Button variant="outline">Overview</Button>
         </Link>
@@ -137,7 +137,7 @@ export function PromoCodes() {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input id="code" name="code" label="Code" value={form.code} onChange={handleChange} placeholder="e.g. VOLUNTEER20" required />
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="block text-sm font-medium text-gray-700">Discount type</label>
                 <select name="discount_type" value={form.discount_type} onChange={handleChange}
@@ -148,7 +148,7 @@ export function PromoCodes() {
               </div>
               <Input id="discount_value" name="discount_value" label={form.discount_type === 'PERCENTAGE' ? 'Discount (%)' : 'Discount ($)'} type="number" step="0.01" min="0" value={form.discount_value} onChange={handleChange} required />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input id="usage_limit" name="usage_limit" label="Total usage limit (optional)" type="number" min="1" value={form.usage_limit} onChange={handleChange} />
               <Input id="per_customer_limit" name="per_customer_limit" label="Per customer limit" type="number" min="1" value={form.per_customer_limit} onChange={handleChange} />
             </div>

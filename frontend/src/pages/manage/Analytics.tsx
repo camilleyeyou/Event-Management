@@ -52,7 +52,7 @@ export function Analytics() {
         <span className="text-gray-900">Analytics</span>
       </div>
 
-      <div className="flex gap-4 mb-8">
+      <div className="flex flex-wrap gap-2 sm:gap-4 mb-8">
         <Link to={`/manage/events/${eventSlug}?org=${orgSlug}`}>
           <Button variant="outline">Overview</Button>
         </Link>
@@ -141,7 +141,7 @@ export function Analytics() {
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Promo code usage */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Promo Code Usage</h2>

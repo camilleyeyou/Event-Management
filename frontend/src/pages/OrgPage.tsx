@@ -71,23 +71,23 @@ export function OrgPage() {
 
       <div className="max-w-3xl mx-auto px-4 -mt-12">
         {/* Org header */}
-        <div className="flex items-end gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 mb-8">
           {organization.logo_url ? (
             <img
               src={organization.logo_url}
               alt={organization.name}
-              className="w-24 h-24 rounded-xl object-cover border-4 border-white shadow-sm"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover border-4 border-white shadow-sm"
             />
           ) : (
             <div
-              className="w-24 h-24 rounded-xl border-4 border-white shadow-sm flex items-center justify-center text-white text-3xl font-bold"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl border-4 border-white shadow-sm flex items-center justify-center text-white text-2xl sm:text-3xl font-bold"
               style={{ backgroundColor: organization.primary_color }}
             >
               {organization.name.charAt(0)}
             </div>
           )}
           <div className="pb-1">
-            <h1 className="text-2xl font-bold text-gray-900">{organization.name}</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{organization.name}</h1>
             {organization.website_url && (
               <a
                 href={organization.website_url}
@@ -155,9 +155,9 @@ function EventCard({ event, orgSlug }: { event: OrgData['events'][0]; orgSlug: s
       to={`/${orgSlug}/events/${event.slug}`}
       className="block bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow overflow-hidden"
     >
-      <div className="flex">
+      <div className="flex flex-col sm:flex-row">
         {event.cover_image_url && (
-          <div className="w-32 h-28 flex-shrink-0">
+          <div className="w-full sm:w-32 h-40 sm:h-28 shrink-0">
             <img src={event.cover_image_url} alt="" className="w-full h-full object-cover" />
           </div>
         )}
@@ -170,7 +170,7 @@ function EventCard({ event, orgSlug }: { event: OrgData['events'][0]; orgSlug: s
           </div>
           <h3 className="font-semibold text-gray-900 truncate">{event.title}</h3>
           {event.subtitle && <p className="text-sm text-gray-500 truncate">{event.subtitle}</p>}
-          <div className="flex items-center gap-3 mt-2 text-sm text-gray-500">
+          <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-gray-500">
             {event.date_tbd ? (
               <span>Date TBD</span>
             ) : event.start_datetime ? (

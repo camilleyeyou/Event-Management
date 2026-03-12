@@ -108,7 +108,7 @@ export function Venues() {
         <span className="text-gray-900">Venues</span>
       </div>
 
-      <div className="flex gap-4 mb-8">
+      <div className="flex flex-wrap gap-2 sm:gap-4 mb-8">
         <Link to={`/manage/org/${orgSlug}`}>
           <Button variant="outline">Settings</Button>
         </Link>
@@ -135,7 +135,7 @@ export function Venues() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input id="name" name="name" label="Venue name" value={form.name} onChange={handleChange} required />
             <Input id="address" name="address" label="Street address" value={form.address} onChange={handleChange} required />
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <Input id="city" name="city" label="City" value={form.city} onChange={handleChange} required />
               <Input id="state" name="state" label="State" value={form.state} onChange={handleChange} required />
               <Input id="postal_code" name="postal_code" label="ZIP" value={form.postal_code} onChange={handleChange} required />

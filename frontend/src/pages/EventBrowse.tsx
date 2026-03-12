@@ -161,13 +161,13 @@ export function EventBrowse() {
               to={`/${event.org_slug}/events/${event.slug}`}
               className="block bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow overflow-hidden"
             >
-              <div className="flex">
+              <div className="flex flex-col sm:flex-row">
                 {event.cover_image_url ? (
-                  <div className="w-40 h-32 flex-shrink-0">
+                  <div className="w-full sm:w-40 h-40 sm:h-32 shrink-0">
                     <img src={event.cover_image_url} alt="" className="w-full h-full object-cover" />
                   </div>
                 ) : (
-                  <div className="w-40 h-32 flex-shrink-0 bg-gray-100 flex items-center justify-center">
+                  <div className="hidden sm:flex w-40 h-32 shrink-0 bg-gray-100 items-center justify-center">
                     <span className="text-3xl text-gray-300">
                       {event.category === 'FUNDRAISER' ? '$' :
                        event.category === 'WORKSHOP' ? 'W' :

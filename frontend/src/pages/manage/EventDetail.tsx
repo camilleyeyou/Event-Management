@@ -73,11 +73,11 @@ export function EventDetail() {
 
       {/* Header */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{event.title}</h1>
             {event.subtitle && <p className="text-gray-500 mt-1">{event.subtitle}</p>}
-            <div className="flex items-center gap-3 mt-3">
+            <div className="flex flex-wrap items-center gap-2 mt-3">
               <span className={`text-xs font-medium px-2 py-1 rounded uppercase ${statusColors[event.status]}`}>
                 {event.status}
               </span>
@@ -86,7 +86,7 @@ export function EventDetail() {
               {event.is_private && <span className="text-xs text-orange-600 bg-orange-50 px-2 py-1 rounded">Private</span>}
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {event.status === 'DRAFT' && (
               <Button onClick={handlePublish} loading={actionLoading === 'publish'}>Publish</Button>
             )}
@@ -105,7 +105,7 @@ export function EventDetail() {
       </div>
 
       {/* Info cards */}
-      <div className="grid grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
           <h3 className="text-sm font-medium text-gray-500 mb-2">Date & Time</h3>
           {event.start_datetime ? (

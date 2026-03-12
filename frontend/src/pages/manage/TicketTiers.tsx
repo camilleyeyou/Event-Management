@@ -112,7 +112,7 @@ export function TicketTiers() {
         <span className="text-gray-900">Tickets</span>
       </div>
 
-      <div className="flex gap-4 mb-8">
+      <div className="flex flex-wrap gap-2 sm:gap-4 mb-8">
         <Link to={`/manage/events/${eventSlug}?org=${orgSlug}`}>
           <Button variant="outline">Overview</Button>
         </Link>
@@ -142,16 +142,16 @@ export function TicketTiers() {
               <textarea id="description" name="description" rows={2} value={form.description} onChange={handleChange}
                 className="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 focus:border-(--color-primary) focus:ring-(--color-primary-light)" />
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Input id="price" name="price" label="Price ($)" type="number" step="0.01" min="0" value={form.price} onChange={handleChange} required />
               <Input id="quantity_total" name="quantity_total" label="Total quantity" type="number" min="1" value={form.quantity_total} onChange={handleChange} required />
               <Input id="sort_order" name="sort_order" label="Sort order" type="number" value={form.sort_order} onChange={handleChange} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input id="min_per_order" name="min_per_order" label="Min per order" type="number" min="1" value={form.min_per_order} onChange={handleChange} />
               <Input id="max_per_order" name="max_per_order" label="Max per order" type="number" min="1" value={form.max_per_order} onChange={handleChange} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="block text-sm font-medium text-gray-700">Visibility</label>
                 <select name="visibility" value={form.visibility} onChange={handleChange}

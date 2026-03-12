@@ -79,7 +79,7 @@ export function OrgTeam() {
         <span className="text-gray-900">{org.name}</span>
       </div>
 
-      <div className="flex gap-4 mb-8">
+      <div className="flex flex-wrap gap-2 sm:gap-4 mb-8">
         <Link to={`/manage/org/${orgSlug}`}>
           <Button variant="outline">Settings</Button>
         </Link>
@@ -101,7 +101,7 @@ export function OrgTeam() {
       {canInvite && (
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Invite Team Member</h2>
-          <form onSubmit={handleInvite} className="flex gap-3 items-end">
+          <form onSubmit={handleInvite} className="flex flex-col sm:flex-row gap-3 sm:items-end">
             <div className="flex-1">
               <Input
                 id="invite-email"

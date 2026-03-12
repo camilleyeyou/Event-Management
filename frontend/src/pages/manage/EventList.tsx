@@ -83,7 +83,7 @@ export function EventList() {
               <Link
                 key={event.id}
                 to={`/manage/events/${event.slug}?org=${event.org_slug}`}
-                className="flex items-center justify-between p-5 hover:bg-gray-50 transition-colors"
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-5 hover:bg-gray-50 transition-colors"
               >
                 <div>
                   <p className="font-medium text-gray-900">{event.title}</p>

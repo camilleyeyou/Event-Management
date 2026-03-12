@@ -152,7 +152,7 @@ export function EventForm() {
               className="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 focus:border-(--color-primary) focus:ring-(--color-primary-light)"
             />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="block text-sm font-medium text-gray-700">Category</label>
               <select name="category" value={form.category} onChange={handleChange}
@@ -184,7 +184,7 @@ export function EventForm() {
           </label>
           {!form.date_tbd && (
             <>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Input id="start_datetime" name="start_datetime" label="Start" type="datetime-local" value={form.start_datetime} onChange={handleChange} />
                 <Input id="end_datetime" name="end_datetime" label="End" type="datetime-local" value={form.end_datetime} onChange={handleChange} />
               </div>

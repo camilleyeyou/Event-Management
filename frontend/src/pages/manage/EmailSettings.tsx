@@ -102,7 +102,7 @@ export function EmailSettings() {
         <span className="text-gray-900">Emails</span>
       </div>
 
-      <div className="flex gap-4 mb-8">
+      <div className="flex flex-wrap gap-2 sm:gap-4 mb-8">
         <Link to={`/manage/events/${eventSlug}?org=${orgSlug}`}>
           <Button variant="outline">Overview</Button>
         </Link>
