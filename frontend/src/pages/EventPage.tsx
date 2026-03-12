@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import DOMPurify from 'dompurify'
 import api from '@/lib/api'
 import { Button } from '@/components/ui/Button'
 
@@ -171,7 +172,7 @@ export function EventPage() {
               <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">About This Event</h2>
               <div
                 className="prose prose-sm max-w-none text-gray-700"
-                dangerouslySetInnerHTML={{ __html: event.description }}
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.description) }}
               />
             </div>
           )}

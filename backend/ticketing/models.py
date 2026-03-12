@@ -57,7 +57,7 @@ class PromoCode(models.Model):
     event = models.ForeignKey(
         "events.Event", on_delete=models.CASCADE, related_name="promo_codes"
     )
-    code = models.CharField(max_length=50)
+    code = models.CharField(max_length=50, db_index=True)
     discount_type = models.CharField(
         max_length=20, choices=DiscountType.choices
     )

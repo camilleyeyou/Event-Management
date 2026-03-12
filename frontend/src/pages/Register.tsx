@@ -37,7 +37,6 @@ export function Register() {
     } catch (err: unknown) {
       const error = err as { response?: { data?: Record<string, unknown> } }
       const data = error.response?.data
-      console.log('Registration error response:', JSON.stringify(data))
       if (data && typeof data === 'object') {
         const messages: string[] = []
         for (const value of Object.values(data)) {

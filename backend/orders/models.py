@@ -26,7 +26,7 @@ class Order(models.Model):
     event = models.ForeignKey(
         "events.Event", on_delete=models.CASCADE, related_name="orders"
     )
-    status = models.CharField(max_length=30, choices=Status.choices, default=Status.PENDING)
+    status = models.CharField(max_length=30, choices=Status.choices, default=Status.PENDING, db_index=True)
     confirmation_code = models.CharField(max_length=10, unique=True, default=generate_confirmation_code)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -88,7 +88,7 @@ class Ticket(models.Model):
     attendee_email = models.EmailField()
     qr_code_data = models.CharField(max_length=500, blank=True)
     qr_code_image_url = models.URLField(blank=True)
-    checked_in = models.BooleanField(default=False)
+    checked_in = models.BooleanField(default=False, db_index=True)
     checked_in_at = models.DateTimeField(null=True, blank=True)
     checked_in_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,

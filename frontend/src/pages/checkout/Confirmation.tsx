@@ -41,7 +41,14 @@ export function CheckoutConfirmation() {
       return
     }
 
-    const data = JSON.parse(checkout)
+    let data
+    try {
+      data = JSON.parse(checkout)
+    } catch {
+      setError('Invalid checkout data.')
+      setLoading(false)
+      return
+    }
 
     // Complete the order
     api.post('/checkout/', {

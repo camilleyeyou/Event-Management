@@ -1,5 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { Layout } from '@/components/Layout'
+import { ProtectedRoute } from '@/components/ProtectedRoute'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { Home } from '@/pages/Home'
 import { Login } from '@/pages/Login'
 import { Register } from '@/pages/Register'
@@ -27,46 +29,55 @@ import { CheckoutConfirmation } from '@/pages/checkout/Confirmation'
 import { EventBrowse } from '@/pages/EventBrowse'
 import { EventPage } from '@/pages/EventPage'
 import { OrgPage } from '@/pages/OrgPage'
+import { NotFound } from '@/pages/NotFound'
 
 function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        {/* Public */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        {/* Attendee */}
-        <Route path="/my/settings" element={<Profile />} />
-        <Route path="/my/tickets" element={<MyTickets />} />
-        {/* Organizer */}
-        <Route path="/manage" element={<OrgList />} />
-        <Route path="/manage/org/new" element={<OrgCreate />} />
-        <Route path="/manage/org/:orgSlug" element={<OrgSettings />} />
-        <Route path="/manage/org/:orgSlug/team" element={<OrgTeam />} />
-        <Route path="/manage/org/:orgSlug/venues" element={<Venues />} />
-        <Route path="/manage/events" element={<EventList />} />
-        <Route path="/manage/events/new" element={<EventForm />} />
-        <Route path="/manage/events/:eventSlug" element={<EventDetail />} />
-        <Route path="/manage/events/:eventSlug/edit" element={<EventForm />} />
-        <Route path="/manage/events/:eventSlug/tickets" element={<TicketTiers />} />
-        <Route path="/manage/events/:eventSlug/promos" element={<PromoCodes />} />
-        <Route path="/manage/events/:eventSlug/check-in" element={<CheckIn />} />
-        <Route path="/manage/events/:eventSlug/emails" element={<EmailSettings />} />
-        <Route path="/manage/events/:eventSlug/guests" element={<GuestList />} />
-        <Route path="/manage/events/:eventSlug/analytics" element={<Analytics />} />
-        {/* Checkout */}
-        <Route path="/checkout/:eventSlug" element={<SelectTickets />} />
-        <Route path="/checkout/:eventSlug/details" element={<CheckoutDetails />} />
-        <Route path="/checkout/:eventSlug/payment" element={<CheckoutPayment />} />
-        <Route path="/checkout/:eventSlug/confirmation" element={<CheckoutConfirmation />} />
-        {/* Public pages */}
-        <Route path="/events" element={<EventBrowse />} />
-        <Route path="/:orgSlug" element={<OrgPage />} />
-        <Route path="/:orgSlug/events/:eventSlug" element={<EventPage />} />
-      </Route>
-    </Routes>
+    <ErrorBoundary>
+      <Routes>
+        <Route element={<Layout />}>
+          {/* Public */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          {/* Attendee (protected) */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/my/settings" element={<Profile />} />
+            <Route path="/my/tickets" element={<MyTickets />} />
+          </Route>
+          {/* Organizer (protected) */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/manage" element={<OrgList />} />
+            <Route path="/manage/org/new" element={<OrgCreate />} />
+            <Route path="/manage/org/:orgSlug" element={<OrgSettings />} />
+            <Route path="/manage/org/:orgSlug/team" element={<OrgTeam />} />
+            <Route path="/manage/org/:orgSlug/venues" element={<Venues />} />
+            <Route path="/manage/events" element={<EventList />} />
+            <Route path="/manage/events/new" element={<EventForm />} />
+            <Route path="/manage/events/:eventSlug" element={<EventDetail />} />
+            <Route path="/manage/events/:eventSlug/edit" element={<EventForm />} />
+            <Route path="/manage/events/:eventSlug/tickets" element={<TicketTiers />} />
+            <Route path="/manage/events/:eventSlug/promos" element={<PromoCodes />} />
+            <Route path="/manage/events/:eventSlug/check-in" element={<CheckIn />} />
+            <Route path="/manage/events/:eventSlug/emails" element={<EmailSettings />} />
+            <Route path="/manage/events/:eventSlug/guests" element={<GuestList />} />
+            <Route path="/manage/events/:eventSlug/analytics" element={<Analytics />} />
+          </Route>
+          {/* Checkout */}
+          <Route path="/checkout/:eventSlug" element={<SelectTickets />} />
+          <Route path="/checkout/:eventSlug/details" element={<CheckoutDetails />} />
+          <Route path="/checkout/:eventSlug/payment" element={<CheckoutPayment />} />
+          <Route path="/checkout/:eventSlug/confirmation" element={<CheckoutConfirmation />} />
+          {/* Public pages */}
+          <Route path="/events" element={<EventBrowse />} />
+          <Route path="/:orgSlug" element={<OrgPage />} />
+          <Route path="/:orgSlug/events/:eventSlug" element={<EventPage />} />
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </ErrorBoundary>
   )
 }
 

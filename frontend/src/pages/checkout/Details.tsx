@@ -31,7 +31,14 @@ export function CheckoutDetails() {
     return null
   }
 
-  const checkoutData = JSON.parse(checkout)
+  let checkoutData
+  try {
+    checkoutData = JSON.parse(checkout)
+  } catch {
+    sessionStorage.removeItem('checkout')
+    navigate(`/checkout/${eventSlug}`)
+    return null
+  }
   const isFree = checkoutData.calc?.is_free
 
   const onSubmit = (data: DetailsForm) => {
