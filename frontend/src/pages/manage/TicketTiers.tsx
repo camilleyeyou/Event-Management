@@ -3,6 +3,7 @@ import { useParams, useSearchParams, Link } from 'react-router-dom'
 import api from '@/lib/api'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 
 interface Tier {
   id: string
@@ -96,10 +97,13 @@ export function TicketTiers() {
     setShowForm(true)
   }
 
-  const handleDeactivate = async (id: string) => {
-    if (!confirm('Deactivate this tier?')) return
-    await api.delete(`${base}/ticket-tiers/${id}/`)
+  const [deactivateTarget, setDeactivateTarget] = useState<string | null>(null)
+
+  const handleDeactivate = async () => {
+    if (!deactivateTarget) return
+    await api.delete(`${base}/ticket-tiers/${deactivateTarget}/`)
     loadTiers()
+    setDeactivateTarget(null)
   }
 
   return (
@@ -210,7 +214,7 @@ export function TicketTiers() {
                 {tier.is_active && (
                   <div className="flex gap-2">
                     <button onClick={() => handleEdit(tier)} className="text-sm text-blue-600 hover:text-blue-800">Edit</button>
-                    <button onClick={() => handleDeactivate(tier.id)} className="text-sm text-red-500 hover:text-red-700">Deactivate</button>
+                    <button onClick={() => setDeactivateTarget(tier.id)} className="text-sm text-red-500 hover:text-red-700">Deactivate</button>
                   </div>
                 )}
               </div>
@@ -218,6 +222,16 @@ export function TicketTiers() {
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        open={!!deactivateTarget}
+        title="Deactivate tier"
+        message="Are you sure you want to deactivate this ticket tier? It will no longer be available for purchase."
+        confirmLabel="Deactivate"
+        variant="danger"
+        onConfirm={handleDeactivate}
+        onCancel={() => setDeactivateTarget(null)}
+      />
     </div>
   )
 }

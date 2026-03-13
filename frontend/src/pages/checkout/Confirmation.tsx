@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useSearchParams } from 'react-router-dom'
 import api from '@/lib/api'
 import { Button } from '@/components/ui/Button'
 
@@ -29,11 +29,51 @@ interface OrderData {
 
 export function CheckoutConfirmation() {
   const { eventSlug } = useParams()
+  const [searchParams] = useSearchParams()
   const [order, setOrder] = useState<OrderData | null>(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Case 1: Returning from Stripe redirect (paid event)
+    const paymentIntent = searchParams.get('payment_intent')
+    const redirectStatus = searchParams.get('redirect_status')
+
+    if (paymentIntent) {
+      if (redirectStatus === 'succeeded') {
+        // Payment succeeded — load the order from session
+        const stored = sessionStorage.getItem('completed_order')
+        if (stored) {
+          try {
+            setOrder(JSON.parse(stored))
+            sessionStorage.removeItem('completed_order')
+          } catch {
+            setError('Could not load order data.')
+          }
+        } else {
+          setError('Payment completed but order data was lost. Check your email for confirmation.')
+        }
+      } else {
+        setError(`Payment ${redirectStatus || 'failed'}. Please try again.`)
+      }
+      setLoading(false)
+      return
+    }
+
+    // Case 2: Order already completed by Payment page (paid, no Stripe key configured)
+    const completedOrder = sessionStorage.getItem('completed_order')
+    if (completedOrder) {
+      try {
+        setOrder(JSON.parse(completedOrder))
+        sessionStorage.removeItem('completed_order')
+      } catch {
+        setError('Could not load order data.')
+      }
+      setLoading(false)
+      return
+    }
+
+    // Case 3: Free event — create order now
     const checkout = sessionStorage.getItem('checkout')
     if (!checkout) {
       setError('No checkout data found.')
@@ -50,7 +90,6 @@ export function CheckoutConfirmation() {
       return
     }
 
-    // Complete the order
     api.post('/checkout/', {
       action: 'complete',
       org_slug: data.org_slug,
@@ -68,10 +107,19 @@ export function CheckoutConfirmation() {
     }).finally(() => {
       setLoading(false)
     })
-  }, [eventSlug])
+  }, [eventSlug, searchParams])
 
   if (loading) return <div className="p-8 text-center text-gray-500">Processing your order...</div>
-  if (error) return <div className="max-w-xl mx-auto px-4 py-16 text-center text-red-600">{error}</div>
+  if (error) return (
+    <div className="max-w-xl mx-auto px-4 py-16 text-center">
+      <div className="rounded-lg bg-red-50 p-6">
+        <p className="text-red-700 font-medium">{error}</p>
+        <Link to={`/checkout/${eventSlug}`} className="inline-block mt-4">
+          <Button variant="outline">Try again</Button>
+        </Link>
+      </div>
+    </div>
+  )
   if (!order) return null
 
   const isFree = parseFloat(order.total) === 0

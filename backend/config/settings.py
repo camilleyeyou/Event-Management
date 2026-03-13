@@ -158,6 +158,7 @@ STRIPE_PUBLISHABLE_KEY = config("STRIPE_PUBLISHABLE_KEY", default="")
 
 # Email (console backend for dev, SendGrid/SES for production)
 EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="noreply@gathergood.com")
 
 # Security settings for production
 if not DEBUG:

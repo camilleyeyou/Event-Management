@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import api from '@/lib/api'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 
 interface Venue {
   id: string
@@ -88,13 +89,17 @@ export function Venues() {
     setShowForm(true)
   }
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Delete this venue?')) return
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null)
+
+  const handleDelete = async () => {
+    if (!deleteTarget) return
     try {
-      await api.delete(`/organizations/${orgSlug}/venues/${id}/`)
+      await api.delete(`/organizations/${orgSlug}/venues/${deleteTarget}/`)
       loadVenues()
     } catch {
       setMessage({ type: 'error', text: 'Failed to delete venue.' })
+    } finally {
+      setDeleteTarget(null)
     }
   }
 
@@ -185,13 +190,23 @@ export function Venues() {
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => handleEdit(venue)} className="text-sm text-blue-600 hover:text-blue-800">Edit</button>
-                  <button onClick={() => handleDelete(venue.id)} className="text-sm text-red-500 hover:text-red-700">Delete</button>
+                  <button onClick={() => setDeleteTarget(venue.id)} className="text-sm text-red-500 hover:text-red-700">Delete</button>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        title="Delete venue"
+        message="Are you sure you want to delete this venue? This cannot be undone."
+        confirmLabel="Delete"
+        variant="danger"
+        onConfirm={handleDelete}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   )
 }

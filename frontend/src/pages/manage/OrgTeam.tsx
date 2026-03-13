@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import api from '@/lib/api'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 
 interface Member {
   id: string
@@ -56,13 +57,17 @@ export function OrgTeam() {
     }
   }
 
-  const handleRemove = async (memberId: string) => {
-    if (!confirm('Remove this team member?')) return
+  const [removeTarget, setRemoveTarget] = useState<string | null>(null)
+
+  const handleRemove = async () => {
+    if (!removeTarget) return
     try {
-      await api.delete(`/organizations/${orgSlug}/members/${memberId}/`)
+      await api.delete(`/organizations/${orgSlug}/members/${removeTarget}/`)
       loadData()
     } catch {
       setMessage({ type: 'error', text: 'Failed to remove member.' })
+    } finally {
+      setRemoveTarget(null)
     }
   }
 
@@ -151,7 +156,7 @@ export function OrgTeam() {
                 </span>
                 {isOwner && (
                   <button
-                    onClick={() => handleRemove(member.id)}
+                    onClick={() => setRemoveTarget(member.id)}
                     className="text-sm text-red-500 hover:text-red-700"
                   >
                     Remove
@@ -162,6 +167,16 @@ export function OrgTeam() {
           ))}
         </div>
       </div>
+
+      <ConfirmDialog
+        open={!!removeTarget}
+        title="Remove team member"
+        message="Are you sure you want to remove this team member from the organization?"
+        confirmLabel="Remove"
+        variant="danger"
+        onConfirm={handleRemove}
+        onCancel={() => setRemoveTarget(null)}
+      />
     </div>
   )
 }

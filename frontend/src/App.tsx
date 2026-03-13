@@ -6,6 +6,7 @@ import { Home } from '@/pages/Home'
 import { Login } from '@/pages/Login'
 import { Register } from '@/pages/Register'
 import { ForgotPassword } from '@/pages/ForgotPassword'
+import { ResetPassword } from '@/pages/ResetPassword'
 import { Profile } from '@/pages/Profile'
 import { MyTickets } from '@/pages/MyTickets'
 import { OrgList } from '@/pages/manage/OrgList'
@@ -41,6 +42,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           {/* Attendee (protected) */}
           <Route element={<ProtectedRoute />}>
             <Route path="/my/settings" element={<Profile />} />

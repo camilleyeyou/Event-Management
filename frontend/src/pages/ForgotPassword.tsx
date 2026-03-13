@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import api from '@/lib/api'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 
@@ -11,10 +12,20 @@ interface ForgotPasswordForm {
 export function ForgotPassword() {
   const { register, handleSubmit, formState: { errors } } = useForm<ForgotPasswordForm>()
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [apiError, setApiError] = useState('')
 
-  const onSubmit = async (_data: ForgotPasswordForm) => {
-    // TODO: Integrate with backend forgot-password endpoint
-    setSubmitted(true)
+  const onSubmit = async (data: ForgotPasswordForm) => {
+    setLoading(true)
+    setApiError('')
+    try {
+      await api.post('/auth/forgot-password/', data)
+      setSubmitted(true)
+    } catch {
+      setApiError('Something went wrong. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (submitted) {
@@ -44,6 +55,10 @@ export function ForgotPassword() {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {apiError && (
+            <div className="rounded-lg bg-red-50 p-3 text-sm text-red-700">{apiError}</div>
+          )}
+
           <Input
             id="email"
             label="Email"
@@ -52,7 +67,7 @@ export function ForgotPassword() {
             error={errors.email?.message}
           />
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" loading={loading} className="w-full">
             Send reset link
           </Button>
         </form>

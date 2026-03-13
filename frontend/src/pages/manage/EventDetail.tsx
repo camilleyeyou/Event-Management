@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useSearchParams, Link } from 'react-router-dom'
 import api from '@/lib/api'
 import { Button } from '@/components/ui/Button'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 
 interface EventData {
   id: string
@@ -51,8 +52,10 @@ export function EventDetail() {
     setActionLoading('')
   }
 
+  const [showCancelDialog, setShowCancelDialog] = useState(false)
+
   const handleCancel = async () => {
-    if (!confirm('Are you sure you want to cancel this event? Attendees will be notified.')) return
+    setShowCancelDialog(false)
     setActionLoading('cancel')
     try {
       await api.post(`/organizations/${orgSlug}/events/${eventSlug}/cancel/`)
@@ -152,7 +155,7 @@ export function EventDetail() {
       {!['COMPLETED', 'CANCELLED'].includes(event.status) && (
         <div className="flex justify-end">
           <button
-            onClick={handleCancel}
+            onClick={() => setShowCancelDialog(true)}
             disabled={actionLoading === 'cancel'}
             className="text-sm text-red-500 hover:text-red-700"
           >
@@ -160,6 +163,16 @@ export function EventDetail() {
           </button>
         </div>
       )}
+
+      <ConfirmDialog
+        open={showCancelDialog}
+        title="Cancel event"
+        message="Are you sure you want to cancel this event? Attendees will be notified."
+        confirmLabel="Cancel Event"
+        variant="danger"
+        onConfirm={handleCancel}
+        onCancel={() => setShowCancelDialog(false)}
+      />
     </div>
   )
 }

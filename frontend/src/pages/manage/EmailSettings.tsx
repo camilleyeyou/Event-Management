@@ -3,6 +3,7 @@ import { useParams, useSearchParams, Link } from 'react-router-dom'
 import api from '@/lib/api'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 
 interface EmailConfig {
   confirmation: boolean
@@ -71,9 +72,10 @@ export function EmailSettings() {
     }
   }
 
-  const handleBulkSend = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!confirm('Send this email to all attendees?')) return
+  const [showBulkConfirm, setShowBulkConfirm] = useState(false)
+
+  const handleBulkSend = async () => {
+    setShowBulkConfirm(false)
     setBulkLoading(true)
     try {
       const res = await api.post(`${base}/bulk/`, { subject: bulkSubject, body: bulkBody })
@@ -147,7 +149,7 @@ export function EmailSettings() {
       {/* Bulk email */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Send Bulk Email</h2>
-        <form onSubmit={handleBulkSend} className="space-y-4">
+        <form onSubmit={(e) => { e.preventDefault(); setShowBulkConfirm(true) }} className="space-y-4">
           <Input
             id="bulk-subject"
             label="Subject"
@@ -195,6 +197,15 @@ export function EmailSettings() {
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        open={showBulkConfirm}
+        title="Send bulk email"
+        message="Send this email to all attendees of this event?"
+        confirmLabel="Send"
+        onConfirm={handleBulkSend}
+        onCancel={() => setShowBulkConfirm(false)}
+      />
     </div>
   )
 }
