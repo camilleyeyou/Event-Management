@@ -48,6 +48,14 @@ export function Layout() {
                     My Tickets
                   </Link>
                   <div className="w-px h-6 bg-gray-200 mx-2" />
+                  <Link to="/manage/events/new">
+                    <Button size="sm" className="gap-1.5">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                      </svg>
+                      Create Event
+                    </Button>
+                  </Link>
                   <Link to="/my/settings" className={`px-3 py-2 rounded-lg hover:bg-gray-100 ${navLinkClass('/my/settings')}`}>
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-full bg-linear-to-br from-(--color-primary) to-(--color-accent) flex items-center justify-center">
@@ -121,6 +129,14 @@ export function Layout() {
                 <Link to="/my/tickets" onClick={() => setMenuOpen(false)} className="block px-3 py-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-50">My Tickets</Link>
                 <Link to="/my/settings" onClick={() => setMenuOpen(false)} className="block px-3 py-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-50">Settings</Link>
                 <div className="border-t border-gray-100 mt-2 pt-2">
+                  <Link to="/manage/events/new" onClick={() => setMenuOpen(false)} className="block">
+                    <Button className="w-full gap-1.5 mb-2">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                      </svg>
+                      Create Event
+                    </Button>
+                  </Link>
                   <button onClick={handleLogout} className="block w-full text-left px-3 py-2.5 text-sm text-red-600 rounded-lg hover:bg-red-50">Log out</button>
                 </div>
               </>
