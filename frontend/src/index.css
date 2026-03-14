@@ -62,7 +62,7 @@ body {
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -71,15 +71,80 @@ body {
 }
 
 .animate-fade-up {
-  animation: fade-up 0.5s ease-out forwards;
+  animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Staggered card entrance */
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-card-in {
+  opacity: 0;
+  animation: card-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Partiful-style layered card shadow */
+.card-shadow {
+  box-shadow:
+    0 0.8px 2.4px -0.6px rgba(0, 0, 0, 0.04),
+    0 2.4px 7.2px -1.2px rgba(0, 0, 0, 0.04),
+    0 6.4px 19px -1.9px rgba(0, 0, 0, 0.05),
+    0 20px 60px -2.5px rgba(0, 0, 0, 0.05);
+}
+
+.card-shadow:hover {
+  box-shadow:
+    0 0.8px 2.4px -0.6px rgba(0, 0, 0, 0.06),
+    0 4px 12px -1.2px rgba(0, 0, 0, 0.06),
+    0 12px 32px -1.9px rgba(0, 0, 0, 0.08),
+    0 32px 80px -2.5px rgba(0, 0, 0, 0.08);
 }
 
 /* Card hover lift effect */
 .card-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+}
+
+/* Skeleton loading shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 12px;
+}
+
+/* Search bar glow on focus */
+.search-glow:focus-within {
+  box-shadow: 0 0 0 3px rgba(46, 125, 91, 0.1), 0 4px 16px -4px rgba(46, 125, 91, 0.15);
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle background pattern */
+.bg-dots {
+  background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+  background-size: 24px 24px;
 }
