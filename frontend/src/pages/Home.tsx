@@ -233,8 +233,17 @@ export function Home() {
           </div>
           <div className="flex gap-6 text-sm">
             <Link to="/events" className="hover:text-white transition-colors">Browse Events</Link>
-            <Link to="/register" className="hover:text-white transition-colors">Sign Up</Link>
-            <Link to="/login" className="hover:text-white transition-colors">Log In</Link>
+            {isLoggedIn ? (
+              <>
+                <Link to="/manage" className="hover:text-white transition-colors">Dashboard</Link>
+                <Link to="/my/tickets" className="hover:text-white transition-colors">My Tickets</Link>
+              </>
+            ) : (
+              <>
+                <Link to="/register" className="hover:text-white transition-colors">Sign Up</Link>
+                <Link to="/login" className="hover:text-white transition-colors">Log In</Link>
+              </>
+            )}
           </div>
         </div>
       </footer>
