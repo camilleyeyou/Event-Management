@@ -256,7 +256,7 @@ export function EventBrowse() {
                   style={{ animationDelay: `${index * 0.08}s` }}
                 >
                   {/* Cover image with overlay */}
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-4/3 overflow-hidden">
                     {event.cover_image_url ? (
                       <img
                         src={event.cover_image_url}
@@ -276,7 +276,7 @@ export function EventBrowse() {
 
                     {/* Date badge - top left */}
                     {!event.date_tbd && event.start_datetime && (
-                      <div className="absolute top-3 left-3 bg-white rounded-xl px-2.5 py-1.5 text-center shadow-lg min-w-[52px]">
+                      <div className="absolute top-3 left-3 bg-white rounded-xl px-2.5 py-1.5 text-center shadow-lg min-w-13">
                         <p className="text-[10px] font-bold text-(--color-primary) uppercase leading-none">
                           {formatDate(event.start_datetime).month}
                         </p>
